@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package v1;
+
+option go_package = "/gen/go/medical/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "graphql/graphql.proto";
+
+// Here is the overall greeting service definition where we define all our endpoints
+service MedicalService {
+  // Sends a greeting
+  rpc UserGet (UserGetRequest) returns (UserGetReply) {
+    option (google.api.http) = {
+      post: "/v1/medical/user"
+      body: "*"
+    };
+    
+    option (graphql.schema) = {
+      type: QUERY   // declare as Query
+      name: "GetUser" // query name
+    };
+  }
+
+    // Sends a greeting
+    rpc ProtocolGet (ProtocolGetRequest) returns (ProtocolGetReply) {
+      option (google.api.http) = {
+        post: "/v1/medical/protocol"
+        body: "*"
+      };
+
+      option (graphql.schema) = {
+        type: QUERY   // declare as Query
+        name: "getProtocol" // query name
+      };
+    }
+}
+
+// The request message containing the login and password
+message UserGetRequest {
+  string user_id = 1;
+}
+
+// The response message containing the answer
+message UserGetReply {
+  User user = 1;
+}
+
+message User {
+  string id = 1;
+  string name = 2;
+  string surname = 3;
+  string email = 4;
+  role role = 7;
+  google.protobuf.Timestamp createdAt = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+enum role {
+  user = 0;
+  admin = 1;
+}
+
+// The request message containing the login and password
+message ProtocolGetRequest {
+  string user_id = 1;
+  Anamnesis anamnesis = 2;
+}
+
+// The response message containing the protocol
+message ProtocolGetReply {
+  Protocol protocol = 1;
+}
+
+message Protocol {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  repeated Actions actions = 4;
+}
+
+message Actions {
+  string id = 1;
+  // string name = 2;        
+	string drug = 3;     
+	string dosage = 4;   
+	string time = 5;    
+	string duration = 6; 
+	string description = 7; 
+}
+
+message Anamnesis {
+  string description = 1;
+}

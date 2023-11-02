@@ -1,0 +1,35 @@
+//// -- LEVEL 1
+//// -- Schemas, Tables and References
+
+// Creating tables
+// You can define the tables with full schema names
+Table user {
+  id   BINARY(16)  [pk, increment] // auto-increment
+  name varchar [not null]
+  role  text [not null]
+  is_active boolean [not null]
+  created_at datetime [not null]
+  updated_at datetime [not null]
+  deleted_at datetime
+}
+
+
+Table protocol as P {
+  id   BINARY(16)  [pk, increment] // auto-increment
+  diagnosis varchar(255) [not null]
+  name varchar(255)
+  description text [not null]
+}
+
+
+Table action as A {
+  id   BINARY(16)  [pk, increment] // auto-increment
+  protocol_id BINARY(16)
+  drug varchar(255) [not null]
+  dosage text
+  time text
+  duration text
+  description text
+}
+
+Ref: A.protocol_id > P.id  

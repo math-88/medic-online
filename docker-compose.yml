@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    container_name: med
+    image: med
+    ports:
+      - 8080:9000
+      - 8081:9001
+      - 2662:9002
+      - 8843:9003
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger_ui_container
+    ports:
+        - "80:8080"
+    volumes:
+        - ./proto/v1/gen/openapiv2:/usr/share/nginx/html/doc
+    environment:
+        # API_URL: doc/auth.swagger.json
+        # SWAGGER_JSON: doc/auth.swagger.json
+        URLS_PRIMARY_NAME: "AuthService"
+        URLS: "[{ url: 'doc/auth.swagger.json', name: 'AuthService'},
+                { url: 'doc/user.swagger.json', name: 'UserManagement'},
+              ]"
+      
+  

@@ -1,0 +1,13 @@
+app:
+  name: 'med'
+  version: '0.0.1'
+  is_debug: true
+
+mysql:
+  host: "127.0.0.1:3306"
+  username: "username"
+  password: "password"
+  database: "test"
+
+openai:
+  token: '<token>'
