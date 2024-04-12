@@ -27,7 +27,7 @@ func NewMedicalServer(userStore UserStore, protocolUseCase *usecase.ProtocolUseC
 
 func (server *MedicalServer) UserGet(ctx context.Context, req *pb.UserGetRequest) (*pb.UserGetReply, error) {
 
-	user, err := server.userStore.GetByID(ctx, req.UserId)
+	user, err := server.userStore.GetByID(ctx, req.GetUserId())
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "cannot find user: %v", err)
 	}
@@ -46,7 +46,7 @@ func (server *MedicalServer) UserGet(ctx context.Context, req *pb.UserGetRequest
 func (server *MedicalServer) ProtocolGet(ctx context.Context, req *pb.ProtocolGetRequest) (*pb.ProtocolGetReply, error) {
 
 	anamnesis := entity.Anamnesis{
-		Description: req.Anamnesis.Description,
+		Description: req.Anamnesis.GetDescription(),
 	}
 
 	protocol, err := server.protocolUseCase.MakeProtocol(ctx, anamnesis)
