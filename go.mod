@@ -1,4 +1,4 @@
-module grpc-ex
+module github.com/math-88/medic-online
 
 go 1.18
 
